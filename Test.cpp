@@ -69,15 +69,15 @@ TEST_CASE("Test graph operator += graph"){
     ariel::Graph g2;
     vector<vector<int>> matrix1 = {
         {0, 1, 1},
-        {1, 4, 2},
-        {1, 4, 7}};
+        {1, 0, 2},
+        {1, 4, 0}};
     g2.loadGraph(matrix1);
 
     ariel::Graph expectedGraph;
     vector<vector<int>> expectedMatrix = {
         {0, 2, 1},
-        {2, 4, 3},
-        {1, 5, 7}};
+        {2, 0, 3},
+        {1, 5, 0}};
     expectedGraph.loadGraph(expectedMatrix);
     g1 += g2;
     CHECK(expectedGraph == g1);
@@ -111,14 +111,7 @@ TEST_CASE("Test graph operator * ")
         {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(matrix2);
-    ariel::Graph g3 = g1 * g2;
-    vector<vector<int>> expectedMatrix = {
-        {1, 0, 2},
-        {1, 3, 1},
-        {1, 0, 2}};
-    ariel::Graph expected;
-    expected.loadGraph(expectedMatrix);
-    CHECK(g3 == expected);
+    CHECK_THROWS(g1 * g2);
 }
 
 TEST_CASE("Test graph operator * scalar")
@@ -148,7 +141,7 @@ TEST_CASE("Test graph operator >"){
     ariel::Graph g2;
     vector<vector<int>> matrix2 = {
         {0, 1, 1},
-        {1, 5, 2},
+        {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(matrix2);
     CHECK(g2>g1);
@@ -179,7 +172,7 @@ TEST_CASE("Test graph operator <"){
     g1.loadGraph(matrix);
     ariel::Graph g2;
     vector<vector<int>> matrix2 = {
-        {8, 1, 1},
+        {0, 1, 1},
         {2, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(matrix2);
@@ -222,7 +215,7 @@ TEST_CASE("Test graph operator --prefix"){
 
 }
 
-TEST_CASE("Test graph operator --postfix"){
+TEST_CASE("Test graph operator postfix--"){
     ariel::Graph g1;
     vector<vector<int>> matrix = {
         {0, 1, 0},
@@ -268,17 +261,17 @@ TEST_CASE("Test isConnected")
         {1, 0, 7, 0, 0},
         {1, 5, 0, -4, 0},
         {0, 0, 10, 0, 0},
-        {-9, 0, 0, 0, 8}};
+        {-9, 0, 0, 0, 0}};
     g2.loadGraph(graph2);
     CHECK(ariel::Algorithms::isConnected(g2) == false);
-    ariel::Graph g1212 = g1 *g2;
-    CHECK(ariel::Algorithms::isConnected(g1212) == false);
+    CHECK_THROWS(g1 *g2);
+    
 
     // Test #3
     ariel::Graph g3;
     vector<vector<int>> graph3 = {
         {0, 5, 8, 0},
-        {1, -6, 1, 0},
+        {1, 0, 1, 0},
         {3, -3, 0, 0},
         {0, 0, 0, 0}};
     g3.loadGraph(graph3);
@@ -357,7 +350,7 @@ TEST_CASE("Test shortestPath")
     vector<vector<int>> graph4 = {
         {0, -5, 0, 0},
         {0, 0, 0, 0},
-        {-3, 0, -1, -8},
+        {-3, 0, 0, -8},
         {-6, 0, 0, 0}};
     g4.loadGraph(graph4);
     CHECK(ariel::Algorithms::shortestPath(g4, 1, 0) == "-1");
@@ -380,12 +373,12 @@ TEST_CASE("Test isContainsCycle")
     CHECK(ariel::Algorithms::isContainsCycle(g) == "0");
     ariel::Graph g0;
     vector<vector<int>> graph0 = {
-        {1, 1, 1},
-        {1, 1, 1},
-        {1, 1, 1}};
+        {0, 1, 1},
+        {1, 0, 1},
+        {1, 1, 0}};
     g0.loadGraph(graph0);
     ariel::Graph g01 = g0+g;
-    CHECK(ariel::Algorithms::isContainsCycle(g01) == "The cycle is: 0->0");
+    CHECK(ariel::Algorithms::isContainsCycle(g01) == "The cycle is: 0->1->2->0");
    
     ariel::Graph g2;
     vector<vector<int>> graph2 = {
@@ -406,9 +399,7 @@ TEST_CASE("Test isContainsCycle")
         {0, 0, 2, 0, 0}};
     g3.loadGraph(graph3);
     CHECK(ariel::Algorithms::isContainsCycle(g3)=="The cycle is: 0->2->0");
-
-    ariel::Graph g32 = g2*g3;
-    CHECK(ariel::Algorithms::isContainsCycle(g32)=="The cycle is: 0->0");
+    CHECK_THROWS(g2 * g3);
 
     // Test #20
     ariel::Graph g4;
@@ -461,7 +452,7 @@ TEST_CASE("Test invalid graph")
         {0, 1, 2, 0},
         {1, 0, 3, 0},
         {2, 3, 0, 4},
-        {0, 0, 4, 4}};
+        {0, 0, 4, 0}};
     g1.loadGraph(graph1);
     ariel::Graph g2;
     vector<vector<int>> graph2 = {

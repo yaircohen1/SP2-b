@@ -37,12 +37,12 @@ namespace ariel {
             friend ostream& operator<<(ostream& stream, const Graph& g); // Provides direct access to the private members of the Graph class
             bool checkSameSize(const Graph& first, const Graph& second) const; 
             Graph operator+(const Graph& other) const;
-            Graph operator+=(const Graph& other);
+            Graph& operator+=(const Graph& other);
             Graph operator+() const;
             Graph& operator++();
             Graph operator++(int);
             Graph operator-(const Graph& other) const;
-            Graph operator-=(const Graph& other);
+            Graph& operator-=(const Graph& other);
             Graph operator-() const;
             Graph& operator--();
             Graph operator--(int);

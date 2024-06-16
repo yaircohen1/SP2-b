@@ -25,15 +25,15 @@ int main()
     // 3x3 matrix that represents a connected graph.
     vector<vector<int>> graph2 = {
         {0, 5, 9},
-        {6, 5, 1},
-        {0, 1, 1}};
+        {6, 0, 1},
+        {0, 1, 0}};
     g2.loadGraph(graph2); // Load the graph to the object.
 
     ariel::Graph g3;
     // 4x4 matrix that represents a connected graph.
     vector<vector<int>> graph3 = {
         {0, 8, 0},
-        {5, 4, 1},
+        {5, 0, 1},
         {0, 6, 0} 
         };
     g3.loadGraph(graph3); // Load the graph to the object.
@@ -63,23 +63,23 @@ int main()
     g6--;
     cout << "Graph 6: (--)" << endl;
     g6.printGraph();
-    ariel::Graph g7=g1*g3; 
-    cout << "Graph 7: (g1*g3)" << endl;
-    cout << g7 << endl;
+    // ariel::Graph g7=g1*g3; 
+    // cout << "Graph 7: (g1*g3)" << endl;
+    //cout << g7 << endl;
 
     ariel::Graph g8;
     vector<vector<int>> graph8 = {
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9}
+        {0, 2, 3},
+        {4, 0, 6},
+        {7, 8, 0}
     };
     g8.loadGraph(graph8);
 
     ariel::Graph g9;
     vector<vector<int>> graph9 = {
-        {9, 8, 7},
-        {6, 5, 4},
-        {3, 2, 1}
+        {0, 8, 7},
+        {6, 0, 4},
+        {3, 2, 0}
     };
     g9.loadGraph(graph9);
 
@@ -91,16 +91,16 @@ int main()
 
     ariel::Graph g10;
     std::vector<std::vector<int>> graph10 = {
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9}
+        {0, 2, 3},
+        {4, 0, 6},
+        {7, 8, 0}
     };
     g10.loadGraph(graph10);
 
     ariel::Graph g12;
     std::vector<std::vector<int>> graph12 = {
-        {1, 2},
-        {4, 5}
+        {0, 2},
+        {4, 0}
     };
     g12.loadGraph(graph12);
 

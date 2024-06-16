@@ -19,6 +19,12 @@ namespace ariel {
         if(inputMatrix.empty()){
             throw invalid_argument ("Invalid graph:: the matrix is empty");
         }
+        // Check if there are no diagonal elements
+        for(size_t i = 0; i < inputMatrix.size(); i++) {
+            if (inputMatrix[i][i] != 0) {
+                throw invalid_argument("Invalid graph: The matrix has non-zero diagonal elements.");
+            }
+        }
         // Load the matrix and set the number of vertices
         this->Matrix = inputMatrix;
         this->numV = inputMatrix.size();
@@ -99,7 +105,7 @@ namespace ariel {
 
     // EX2
 
-    // Implementation of operator printing the graph - same implementation of printGraph function
+    // Implementation of operator printing the graph - print graph's matrix
     ostream& operator<<(ostream &stream, const Graph &g) {
         const vector<vector<int>> & matrix = g.Matrix;
         for (size_t row=0; row< g.numV; ++row){
@@ -145,7 +151,7 @@ namespace ariel {
     }
 
     // Operator '+=' to add two graphs: a+=b -> a=a+b
-    Graph Graph::operator+=(const Graph& other) {
+    Graph& Graph::operator+=(const Graph& other) {
         if(!checkSameSize(*this, other)) {
             throw invalid_argument("Error: the graphs have different size");
         }
@@ -165,7 +171,7 @@ namespace ariel {
         return Graph(*this);
     }
 
-    // Prefix decrement operator to decrease the weight of the edges in the graph by 1
+    // Prefix add operator to add the weight of the edges in the graph by 1
     Graph& Graph::operator++() {
         for (size_t row = 0; row < Matrix.size(); ++row) {
             for (size_t column = 0; column < Matrix[row].size(); ++column) {
@@ -177,7 +183,7 @@ namespace ariel {
         return *this; // Return the current graph
     }
 
-    // Postfix decrement operator to decrease the weight of the edges in the graph by 1
+    // Postfix add operator to add the weight of the edges in the graph by 1
     Graph Graph::operator++(int) {
         Graph old = *this; //  Create a copy of the current state of the graph.
         for (size_t row=0; row<old.getNumV(); ++row){
@@ -211,7 +217,7 @@ namespace ariel {
     }
 
     // Operator '-=' to to subtract between two graphs: a-=b -> a=a-b
-    Graph Graph::operator-=(const Graph& other) {
+    Graph& Graph::operator-=(const Graph& other) {
         if(!checkSameSize(*this, other)) {
             throw invalid_argument("Error: the graphs have different size");
         }
